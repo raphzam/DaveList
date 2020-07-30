@@ -96,7 +96,7 @@
                     <div class="card-body">
                         [[${listing.address}]] <br>
                         [[${listing.state}]] <br>
-                        [[${listing.price}]] <br>
+                        $[[${listing.price}]]/month <br>
                         <!--                        [[${listing.rented}]] <br>-->
                         <a th:href="@{/listing/{id} (id=${listing.id})}">Listing Detail</a>
                         <div th:if="${listing.rented == false}">
