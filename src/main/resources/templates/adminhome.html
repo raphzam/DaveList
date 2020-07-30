@@ -12,6 +12,7 @@
     <title>Home</title>
 </head>
 <body>
+<div th:replace="home::navBar"></div>
 
 <ul>
     <li><a th:href="@{/}">Home</a></li>
@@ -37,6 +38,18 @@
                             <li><a th:href="@{/admin/updatelisting/{id} (id=${listing.id})}">Update Listing</a></li>
                             <li><a th:href="@{/admin/togglerented/{id} (id=${listing.id})}">Toggle Rented</a></li>
                         </ul>
+
+                        <div th:if="${listing.rented == false}">
+                            <button type="button" class="btn btn-success" method="post"
+                                    th:href="@{/admin/togglerented/{id} (id=${listing.id})}">Available
+                            </button>
+                        </div>
+                        <div th:if="${listing.rented == true}">
+                            <button type="button" class="btn btn-secondary" method="post"
+                                    th:href="@{/admin/togglerented/{id} (id=${listing.id})}">Booked
+                            </button>
+                        </div>
+
                         <hr class="my-4">
                     </div>
                 </div>

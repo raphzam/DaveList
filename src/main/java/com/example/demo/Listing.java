@@ -16,6 +16,7 @@ public class Listing {
     private String address;
     private String state;
     private double price;
+    private boolean rented;
 
     //detailed variables
     private String description;
@@ -23,7 +24,6 @@ public class Listing {
     private boolean wifi;
     private String cable;
     private boolean privateBathroom;
-    private boolean rented;
 
     public Listing() {
     }

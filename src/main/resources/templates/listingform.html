@@ -10,8 +10,15 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>New Listing</title>
+    <style>
+        .bool {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
+<div th:replace="home::navBar"></div>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -27,6 +34,53 @@
                         <input class="form-control" type="text" th:field="*{address}" placeholder="Address"><br>
                         <input class="form-control" type="text" th:field="*{state}" placeholder="State"><br>
                         <input class="form-control" type="text" th:field="*{price}" placeholder="Price"><br>
+
+                        <input class="form-control" type="text" th:field="*{description}" placeholder="Description"><br>
+                        <input class="form-control" type="text" th:field="*{rules}" placeholder="rules"><br>
+
+
+                        <div class="btn-group btn-group-toggle bool" data-toggle="buttons">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Cable</span>
+                            </div>
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" th:field="*{cable}" value="None" autocomplete="off" checked> None
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2" th:field="*{cable}" value="Basic" autocomplete="off"> Basic
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option3" th:field="*{cable}" value="Premium" autocomplete="off"> Premium
+                            </label>
+                        </div>
+
+                        <div class="btn-group btn-group-toggle bool" data-toggle="buttons">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">Wifi</span>
+                            </div>
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option4" th:field="*{wifi}" value="true" autocomplete="off" checked> Yes
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option5" th:field="*{wifi}" value="false" autocomplete="off"> No
+                            </label>
+                        </div>
+
+                        <div class="btn-group btn-group-toggle bool" data-toggle="buttons">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3">Bathroom</span>
+                            </div>
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option5" th:field="*{privateBathroom}" value="true" autocomplete="off" checked> Private
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option6" th:field="*{privateBathroom}" value="false" autocomplete="off"> Shared
+                            </label>
+                        </div><br>
+
+
+
+
                         <input class="btn btn-primary" type="submit" value="Post">
                     </form>
                 </div>
