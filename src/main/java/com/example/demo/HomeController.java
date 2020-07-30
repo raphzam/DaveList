@@ -16,34 +16,37 @@ public class HomeController {
     @Autowired
     UserRepository userRepository;
 
+
 //    ADMIN VIEWS
 
     @RequestMapping("/admin/home")
-    public String loadAdminHome(Model model){//home page shows all listings
+    public String loadAdminHome(Model model, Principal principal) {//home page shows all listings
         model.addAttribute("listings", listingRepository.findAll());
+        String username = principal.getName();
+        model.addAttribute("user", userRepository.findByUsername(username));
         return "adminhome";
     }
 
     @GetMapping("/admin/newlisting")
-    public String loadListingForm(Model model){
+    public String loadListingForm(Model model) {
         model.addAttribute("listing", new Listing());
         return "listingform";
     }
 
     @PostMapping("/admin/processlisting")
-    public String processListing(@ModelAttribute Listing listing, Model model){
+    public String processListing(@ModelAttribute Listing listing, Model model) {
         listingRepository.save(listing);
         return "redirect:/";
     }
 
     @RequestMapping("/admin/updatelisting/{id}")
-    public String updateListing(@PathVariable("id") long id, Model model){
+    public String updateListing(@PathVariable("id") long id, Model model) {
         model.addAttribute("listing", listingRepository.findById(id).get());
         return "listingform";
     }
 
     @RequestMapping("/admin/togglerented/{id}")
-    public String toggleRented(@PathVariable("id") long id, Model model){
+    public String toggleRented(@PathVariable("id") long id, Model model) {
         Listing listing = new Listing();
         listing = listingRepository.findById(id).get();
 
@@ -58,30 +61,27 @@ public class HomeController {
 //    PUBLIC VIEWS
 
     @RequestMapping("/login")
-    public String loadHomePage(){//home page shows all listings
+    public String loadHomePage() {//home page shows all listings
         return "login";
     }
 
     @RequestMapping("/")
-    public String loadHomePage(Model model){//home page shows all listings
-//        String username = principal.getName();
-//        model.addAttribute("user", userRepository.findByUsername(username));
+    public String loadHomePage(Model model, Principal principal) {//home page shows all listings
+        String username;
+        if (principal != null) {
+            username = principal.getName();
+            User user = userRepository.findByUsername(username);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("listings", listingRepository.findAll());
         return "home";
     }
 
     @GetMapping("/listing/{id}")
-    public String viewListing(@PathVariable("id") long id, Model model){
+    public String viewListing(@PathVariable("id") long id, Model model) {
         model.addAttribute("listing", listingRepository.findById(id).get());
         return "listingdetail";
     }
-
-
-
-
-
-
-
 
 
 }

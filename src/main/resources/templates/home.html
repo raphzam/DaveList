@@ -47,7 +47,13 @@
                             <li class="nav-item active">
                                 <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
                             </li>
+                            <span th:if="${user}">
+                                <li class="nav-item active">
+                                    <a class="nav-link" th:href="@{/}">New Listing<span class="sr-only">(current)</span></a>
+                                </li>
+                            </span>
                         </ul>
+                        <span class="text-center" th:if="${user}">Welcome, [[${user.username}]]</span>
                         <a th:href="@{/admin/home}"><span class="navbar-text">
       Employee Portal
     </span></a>

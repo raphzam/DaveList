@@ -19,6 +19,7 @@
     <li><a th:href="@{/admin/newlisting}">New Listing</a></li>
 </ul>
 
+<span th:if="${user}"><h1>Welcome, [[${user.username}]]</h1></span>
 
 <div class="container-fluid">
     <div class="row">
