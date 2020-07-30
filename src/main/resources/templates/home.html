@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css" th:href="@{/main.css}">
     <style>
         .map-container {
             overflow: hidden;
@@ -25,7 +27,6 @@
         }
     </style>
     <title>Dave's List</title>
-    <link rel="stylesheet" href="../static/main.css" th:href="@{/main.css}">
 </head>
 <body>
 
@@ -47,16 +48,18 @@
                             <li class="nav-item active">
                                 <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <span th:if="${user}">
+                            <span sec:authorize="isAuthenticated()">
                                 <li class="nav-item active">
-                                    <a class="nav-link" th:href="@{/}">New Listing<span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" th:href="@{/admin/newlisting}">New Listing<span class="sr-only">(current)</span></a>
                                 </li>
                             </span>
                         </ul>
-                        <span class="text-center" th:if="${user}">Welcome, [[${user.username}]]</span>
-                        <a th:href="@{/admin/home}"><span class="navbar-text">
+                        <div sec:authorize="isAuthenticated()"><a th:href="@{/admin/home}">Welcome, <span class="text-center"
+                                                                                 sec:authentication="name">
+                        </span></a></div>
+                        <div sec:authorize="!isAuthenticated()"><a th:href="@{/admin/home}"><span class="navbar-text">
       Employee Portal
-    </span></a>
+    </span></a></div>
                     </div>
                 </nav>
             </div>
@@ -68,7 +71,8 @@
 <header class="hero">
     <div class="overlay"></div>
     <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="https://ak.picdn.net/shutterstock/videos/1039883120/preview/stock-footage-flying-backwards-above-manhattan-buildings-new-york-city-at-sunrise.webm" type="video/mp4">
+        <source src="https://ak.picdn.net/shutterstock/videos/1039883120/preview/stock-footage-flying-backwards-above-manhattan-buildings-new-york-city-at-sunrise.webm"
+                type="video/mp4">
     </video>
     <div class="container h-100">
         <div class="d-flex h-100 text-center align-items-center">
@@ -85,7 +89,7 @@
     <div class="row">
         <div class="col"></div>
         <div class="col-4">
-<!--            <h2 class="text-center">Current Listings</h2>-->
+            <!--            <h2 class="text-center">Current Listings</h2>-->
             <div th:each="listing : ${listings}">
                 <div class="card">
                     <h3 class="card-header text-center">[[${listing.title}]]</h3>
@@ -93,7 +97,7 @@
                         [[${listing.address}]] <br>
                         [[${listing.state}]] <br>
                         [[${listing.price}]] <br>
-<!--                        [[${listing.rented}]] <br>-->
+                        <!--                        [[${listing.rented}]] <br>-->
                         <a th:href="@{/listing/{id} (id=${listing.id})}">Listing Detail</a>
                         <div th:if="${listing.rented == false}">
                             <button type="button" class="btn btn-success" method="post"
